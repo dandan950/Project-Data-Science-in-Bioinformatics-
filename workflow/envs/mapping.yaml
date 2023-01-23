@@ -3,3 +3,4 @@ channels:
   - conda-forge
 dependencies:
   - fastqc =0.11.9
+  - fastp =0.22.0
