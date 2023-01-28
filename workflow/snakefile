@@ -1,0 +1,46 @@
+SAMPLES = ["RV417026_S15_L001_R1_001","RV417026_S15_L001_R2_001"]
+rule all:
+    input:
+        "mapped/1.bam"
+
+rule fastp:
+    input:
+        "original_fastq/FastqExamples/RV417026_S15_L001_R1_001.fastq.gz",
+        "original_fastq/FastqExamples/RV417026_S15_L001_R2_001.fastq.gz"
+    output:
+        "filrered_result/RV417026_S15_L001_R1_001.cleaned.fastq.gz",
+        "filrered_result/RV417026_S15_L001_R2_001.cleaned.fastq.gz"
+    conda:
+        "envs/mapping.yaml"
+    shell:
+        "fastp -i {input[0]} -o {output[0]} -I {input[1]} -O {output[1]} -q 20 -c -y -l 50 -g -p -f 10 -n 5 --adapter_sequence GCGAATTTCGACGATCGTTGCATTAACTCGCGAA --adapter_sequence_r2 AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT"
+
+rule bwa_index:
+    input:
+        "workflow/ref.fasta",
+    output:
+        idx=multiext("midresult/ref", ".amb", ".ann", ".bwt", ".pac", ".sa"),
+    log:
+        "logs/bwa_index/ref.log",
+    params:
+        algorithm="bwtsw",
+    wrapper:
+        "v1.21.4/bio/bwa/index"
+
+rule bwa_mem:
+    input:
+        reads=["filrered_result/RV417026_S15_L001_R2_001.cleaned.fastq.gz", "filrered_result/RV417026_S15_L001_R1_001.cleaned.fastq.gz"],
+        idx=multiext("midresult/ref", ".amb", ".ann", ".bwt", ".pac", ".sa"),
+    output:
+        "mapped/1.bam",
+    log:
+        "logs/bwa_mem/1.log",
+    params:
+        extra=r"-R '@RG\tID:r1\tSM:r1'",
+        sorting="none",  # Can be 'none', 'samtools' or 'picard'.
+        sort_order="queryname",  # Can be 'queryname' or 'coordinate'.
+        sort_extra="",  # Extra args for samtools/picard.
+    threads: 8
+    wrapper:
+        "v1.21.4/bio/bwa/mem"
+        
