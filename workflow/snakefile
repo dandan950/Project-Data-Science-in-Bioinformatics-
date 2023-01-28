@@ -1,46 +1,64 @@
-SAMPLES = ["RV417026_S15_L001_R1_001","RV417026_S15_L001_R2_001"]
 rule all:
-    input:
-        "mapped/1.bam"
+    input:        
+        "sorted/RV417026_S15_L001.bam.bai"
+
 
 rule fastp:
     input:
-        "original_fastq/FastqExamples/RV417026_S15_L001_R1_001.fastq.gz",
-        "original_fastq/FastqExamples/RV417026_S15_L001_R2_001.fastq.gz"
+        "original_fastq/FastqExamples/RV417026_S15_L001_R1_001.fastq",
+        "original_fastq/FastqExamples/RV417026_S15_L001_R2_001.fastq"
     output:
-        "filrered_result/RV417026_S15_L001_R1_001.cleaned.fastq.gz",
-        "filrered_result/RV417026_S15_L001_R2_001.cleaned.fastq.gz"
+        "filrered_result/RV417026_S15_L001_R1_001.cleaned.fastq",
+        "filrered_result/RV417026_S15_L001_R2_001.cleaned.fastq"
     conda:
         "envs/mapping.yaml"
     shell:
         "fastp -i {input[0]} -o {output[0]} -I {input[1]} -O {output[1]} -q 20 -c -y -l 50 -g -p -f 10 -n 5 --adapter_sequence GCGAATTTCGACGATCGTTGCATTAACTCGCGAA --adapter_sequence_r2 AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT"
 
-rule bwa_index:
-    input:
-        "workflow/ref.fasta",
-    output:
-        idx=multiext("midresult/ref", ".amb", ".ann", ".bwt", ".pac", ".sa"),
-    log:
-        "logs/bwa_index/ref.log",
-    params:
-        algorithm="bwtsw",
-    wrapper:
-        "v1.21.4/bio/bwa/index"
 
 rule bwa_mem:
     input:
-        reads=["filrered_result/RV417026_S15_L001_R2_001.cleaned.fastq.gz", "filrered_result/RV417026_S15_L001_R1_001.cleaned.fastq.gz"],
-        idx=multiext("midresult/ref", ".amb", ".ann", ".bwt", ".pac", ".sa"),
+        "filrered_result/RV417026_S15_L001_R1_001.cleaned.fastq",
+        "filrered_result/RV417026_S15_L001_R2_001.cleaned.fastq",
+        "workflow/ref.fasta"
     output:
-        "mapped/1.bam",
-    log:
-        "logs/bwa_mem/1.log",
-    params:
-        extra=r"-R '@RG\tID:r1\tSM:r1'",
-        sorting="none",  # Can be 'none', 'samtools' or 'picard'.
-        sort_order="queryname",  # Can be 'queryname' or 'coordinate'.
-        sort_extra="",  # Extra args for samtools/picard.
-    threads: 8
-    wrapper:
-        "v1.21.4/bio/bwa/mem"
-        
+        "mapped/RV417026_S15_L001.bam",
+        multiext("midresult/ref", ".amb", ".ann", ".bwt", ".pac", ".sa")
+    conda:
+        "envs/mapping.yaml"
+    shell:
+        "bwa index {input[2]} -p midresult/ref;"
+        "bwa mem -p midresult/ref {input[0]} {input[1]} -o {output[0]}"
+
+rule sam_view:
+    input:
+        "mapped/RV417026_S15_L001.bam"
+    output:
+        "mapped/RV417026_S15_L001_1.bam"
+    conda:
+        "envs/mapping.yaml"
+    shell:
+        "samtools view -b {input} -o {output}"
+    
+rule sam_sort:
+    input:
+        "mapped/RV417026_S15_L001_1.bam"
+    output:
+        "sorted/RV417026_S15_L001.bam"
+    conda:
+        "envs/mapping.yaml"
+    shell:
+        "samtools sort {input} -o {output}"
+
+rule sam_index:
+    input:
+        "sorted/RV417026_S15_L001.bam"
+    output:
+        "sorted/RV417026_S15_L001.bam.bai"
+    conda:
+        "envs/mapping.yaml"
+    shell:
+        "samtools sort {input} -o {output}"
+
+
+    
