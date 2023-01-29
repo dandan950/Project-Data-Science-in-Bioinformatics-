@@ -39,7 +39,7 @@ we plan to use a web to show our result
 | Hong YANG     | QC and filter low quality read data (fastq)|
 | Chengcheng LI | assemble |
 
-## Pipeline Implement and Explanation
+# Pipeline Implement and Explanation
 
 ### Tools
 
@@ -84,7 +84,7 @@ fastp -i RV417026_S15_L001_R1_001.fastq.gz -o RV417026_S15_L001_R1_001.cleaned.f
 ```
 
 
-## GUI Implement Explanation
+# GUI Implement and Explanation
 
 # How to Run
 
