@@ -1,21 +1,25 @@
-# Project-Data-Science-in-Bioinformatics
+# Project-Data-Science-in-Bioinformatics 
 
 ## Pipeline
 
 we use snakemake to help us to simpllify the progress and use vscode to connect the server.
 
 And Our pipeline design is the following:
+
 QC and filter low quality read data --> read align-->read sort-->assemble-->variant detection
 
 ## Tools
+
 We design to use some biotools to help us to implement the pipeline.
+
 conda 
+
 snakemake
 
 - fastqc =0.11.9
- - fastp =0.22.0
- - bwa = 0.7.17
- - samtools = 1.16.1
+- fastp =0.22.0
+- bwa = 0.7.17
+- samtools = 1.16.1
 
 ## some command
 
