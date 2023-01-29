@@ -41,7 +41,7 @@ Source code is in `workflow` folder.  </br>
 In `workflow/snakefile`, this is code of pipeline, using snakemake to manage.</br>
 Read data is in `original_fastq`. But `original_fastq` is ignored, which you could see in `.gitignore`, that means `original_fastq` will be not uploaded to github. As read data(.fastq) is too big that it can't be uploaded into github. You need to self create `original_fastq` in your local device. 
 
-***In addition, before you run our pipeline, you need to decompress `fastq.gz` to `fastq`, using `gzip -d RV417002*` command ***
+***In addition, before you run our pipeline, you need to decompress `fastq.gz` to `fastq`, using `gzip -d RV417002*` command***
 
 #### Some Commands
 
