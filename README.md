@@ -59,6 +59,10 @@ snakemake</br>
 ***1.You need to self create `Project-Data-Science-in-Bioinformatics-/original_fastq/FastqExamples` folder.</br>
 2.You need to decompress `fastq.gz` to `fastq`, using `gzip -d RV417002*` command in`original_fastq/FastqExamples` folder.</br>
 After decompressing, `.fastq` file is in `Project-Data-Science-in-Bioinformatics-/original_fastq/FastqExample` folder.</br>***
+```
+gzip -d RV417002*
+```
+
 
 * `Project-Data-Science-in-Bioinformatics-/workflow` folder: source code folder </br>
   * `workflow/snakefile`: this is code of pipeline, using snakemake to manage.</br>
@@ -80,4 +84,8 @@ fastp -i RV417026_S15_L001_R1_001.fastq.gz -o RV417026_S15_L001_R1_001.cleaned.f
 ## How to Run
 
 use `snakemake --cores 50 -p -F --use-conda` in `Project-Data-Science-in-Bioinformatics-` folder, not `Project-Data-Science-in-Bioinformatics-/workflow` folder.
+
+```
+snakemake --cores 50 -p -F --use-conda
+```
 
