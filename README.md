@@ -83,7 +83,7 @@ fastp -i RV417026_S15_L001_R1_001.fastq.gz -o RV417026_S15_L001_R1_001.cleaned.f
 
 ## How to Run
 
-use `snakemake --cores 50 -p -F --use-conda` in `Project-Data-Science-in-Bioinformatics-` folder, not `Project-Data-Science-in-Bioinformatics-/workflow` folder.
+use command `snakemake --cores 50 -p -F --use-conda` in `Project-Data-Science-in-Bioinformatics-` folder, not in `Project-Data-Science-in-Bioinformatics-/workflow` folder.
 
 ```
 snakemake --cores 50 -p -F --use-conda
