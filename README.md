@@ -1,7 +1,5 @@
 # Project-Data-Science-in-Bioinformatics 
 
-## Design
-
 Our project will show in 2 parts: pipeline and GUI
 
 ### Pipeline
