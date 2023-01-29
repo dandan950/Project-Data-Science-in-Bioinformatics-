@@ -1,5 +1,13 @@
 # Project-Data-Science-in-Bioinformatics 
 
+|  Member       | 
+|  ----         |
+| Ruidan LIU    | 
+| Yifei YAO     | 
+| Hong YANG     | 
+| Chengcheng LI | 
+
+
 Our project will show in 2 parts: pipeline and GUI
 
 ### Pipeline
@@ -21,6 +29,15 @@ Now the schedule is the following:
 ### GUI
 
 we plan to use a web to show our result
+
+### Contribution
+
+|  Member       | Contribution|
+|  ----------   |-------------|
+| Ruidan LIU    | read sort (samtools)   |
+| Yifei YAO     | read alogn (bwa)|
+| Hong YANG     | QC and filter low quality read data (fastq)|
+| Chengcheng LI | assemble |
 
 ## Pipeline Implement
 
