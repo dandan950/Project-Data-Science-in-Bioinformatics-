@@ -43,7 +43,7 @@ Read data is in `original_fastq`. But `original_fastq` is ignored, which you cou
 
 ***In addition, before you run our pipeline, you need to decompress `fastq.gz` to `fastq`, using `gzip -d RV417002*` command***
 
-#### Some Commands
+### Some Commands
 
 fastqc -o ../../cleaned_fastqc_result/ -t 16 RV417026_S15_L001_R1_001.cleaned.fasq.gz RV417026_S15_L001_R2_001.cleaned.fastq.gz
 
