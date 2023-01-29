@@ -39,7 +39,7 @@ we plan to use a web to show our result
 | Hong YANG     | QC and filter low quality read data (fastq)|
 | Chengcheng LI | assemble |
 
-## Pipeline Implement
+## Pipeline Implement and Explanation
 
 ### Tools
 
@@ -53,7 +53,7 @@ snakemake</br>
 - samtools >=1.9
 - bwa =0.7.17
 
-### Pipeline Workflow
+### Pipeline Workflow Explanation
 
 ##### Read Data Explanation
 
@@ -84,9 +84,9 @@ fastp -i RV417026_S15_L001_R1_001.fastq.gz -o RV417026_S15_L001_R1_001.cleaned.f
 ```
 
 
-## GUI Implement
+## GUI Implement Explanation
 
-## How to Run
+# How to Run
 
 use command `snakemake --cores 50 -p -F --use-conda` in `Project-Data-Science-in-Bioinformatics-` folder, not in `Project-Data-Science-in-Bioinformatics-/workflow` folder.
 
