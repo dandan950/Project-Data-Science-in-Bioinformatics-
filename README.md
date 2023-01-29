@@ -47,10 +47,11 @@ We design to use some biotools to help us to implement the pipeline.
 
 conda</br>
 snakemake</br>
-- fastqc =0.11.9
-- fastp =0.22.0
-- bwa = 0.7.17
-- samtools = 1.16.1
+- fastqc >=0.11.9
+- fastp >=0.22.0
+- bcftools >=1.9
+- samtools >=1.9
+- bwa =0.7.17
 
 ### Pipeline Workflow
 
