@@ -55,9 +55,10 @@ snakemake</br>
 ### Pipeline Workflow
 
 * `Project-Data-Science-in-Bioinformatics-/original_fastq/FastqExamples`: puts read(.fastq/.fastq.gz). </br>
-*But `original_fastq` is ignored, which you could see in `.gitignore`, that means `original_fastq` will be not uploaded to github. As read(.fastq) is too big that it can't be uploaded into github. You need to self create `original_fastq/FastqExamples` fold in your local device.*</br>
-***Before you run our pipeline, you need to decompress `fastq.gz` to `fastq`, using `gzip -d RV417002*` command.***</br>
-After decompressing, `.fastq` file is in `original_fastq/FastqExample`.</br>
+*But `original_fastq` is ignored, which you could see in `.gitignore`, that means `original_fastq` will be not uploaded to github. As read(.fastq) is too big that it can't be uploaded into github. *</br>
+***1.You need to self create `original_fastq/FastqExamples` fold in your local device.</br>
+2.Before you run our pipeline, you need to decompress `fastq.gz` to `fastq`, using `gzip -d RV417002*` command in`original_fastq/FastqExamples`.</br>
+After decompressing, `.fastq` file is in `original_fastq/FastqExample`.</br>***
 
 * `Project-Data-Science-in-Bioinformatics-/workflow` folder: source code folder </br>
   * `workflow/snakefile`: this is code of pipeline, using snakemake to manage.</br>
