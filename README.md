@@ -35,7 +35,7 @@ we plan to use a web to show our result
 |  Member       | Contribution|
 |  ----------   |-------------|
 | Ruidan LIU    | read sort (samtools)   |
-| Yifei YAO     | read alogn (bwa)|
+| Yifei YAO     | read align (bwa)|
 | Hong YANG     | QC and filter low quality read data (fastq)|
 | Chengcheng LI | assemble |
 
