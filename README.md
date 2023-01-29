@@ -39,9 +39,10 @@ snakemake</br>
 
 Source code is in `workflow` folder.  </br>
 In `workflow/snakefile`, this is code of pipeline, using snakemake to manage.</br>
-Read data is in `original_fastq`. But `original_fastq` is ignored, which you could see in `.gitignore`, that means `original_fastq` will be not uploaded to github. As read data(.fastq) is too big that it can't be uploaded into github. You need to self create `original_fastq` in your local device. 
+Read(.fastq) is in `original_fastq/FastqExamples`. But `original_fastq` is ignored, which you could see in `.gitignore`, that means `original_fastq` will be not uploaded to github. As read(.fastq) is too big that it can't be uploaded into github. You need to self create `original_fastq/FastqExamples` fold in your local device. 
 
-***In addition, before you run our pipeline, you need to decompress `fastq.gz` to `fastq`, using `gzip -d RV417002*` command***
+***In addition, before you run our pipeline, you need to decompress `fastq.gz` to `fastq`, using `gzip -d RV417002*` command***</br>
+after decompressing, `.fastq` file is in `original_fastq/FastqExample`.
 
 ### Some Commands
 
@@ -53,4 +54,5 @@ fastp -i RV417026_S15_L001_R1_001.fastq.gz -o RV417026_S15_L001_R1_001.cleaned.f
 
 ## How to Run
 
+use `snakemake --cores 50 -p -F --use-conda` in `Project-Data-Science-in-Bioinformatics-` folder, not `Project-Data-Science-in-Bioinformatics-/workflow` folder.
 
