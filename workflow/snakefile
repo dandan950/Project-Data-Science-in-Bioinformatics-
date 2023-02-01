@@ -1,6 +1,6 @@
 rule all:
     input:        
-        "sorted/RV417026_S15_L001.bam.bai"
+        "sorted/RV417026_S15_L001.mpileup.gz"
 
 
 rule fastp:
@@ -60,5 +60,18 @@ rule sam_index:
     shell:
         "samtools sort {input} -o {output}"
 
+rule mpilup:
+    input:
+        # single or list of bam files
+        bam="sorted/RV417026_S15_L001.bam",
+        reference_genome="workflow/ref.fasta",
+    output:
+        "sorted/RV417026_S15_L001.mpileup.gz",
+    log:
+        "logs/samtools/mpileup/RV417026_S15_L001.log",
+    params:
+        extra="-d 10000",  # optional
+    wrapper:
+        "v1.22.0/bio/samtools/mpileup"
 
     
