@@ -59,12 +59,20 @@ snakemake</br>
 
 * `Project-Data-Science-in-Bioinformatics-/original_fastq/FastqExamples`: original read data(.fastq/.fastq.gz). </br>
 *But `original_fastq` is ignored, which you could see in `.gitignore`, that means `original_fastq` will be not uploaded to github. As read(.fastq) is too big that it can't be uploaded into github.*</br>
+
+```
+tar -zxvf FastqExamples.tar.gz -C /homes/hong.yang/Project-Data-Science-in-Bioinformatics-/original_fastq/
+```
+
 ***1.You need to self create `Project-Data-Science-in-Bioinformatics-/original_fastq/FastqExamples` folder.</br>
 2.You need to decompress `fastq.gz` to `fastq`, using `gzip -d RV417002*` command in`original_fastq/FastqExamples` folder.</br>
 After decompressing, `.fastq` file is in `Project-Data-Science-in-Bioinformatics-/original_fastq/FastqExample` folder.</br>***
 ```
 gzip -d RV41702*
 ```
+
+
+
 
 * `Project-Data-Science-in-Bioinformatics-/workflow/ref.fasta`:  reference read data, used to align
 
