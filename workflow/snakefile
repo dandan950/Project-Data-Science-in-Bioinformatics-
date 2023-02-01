@@ -60,7 +60,7 @@ rule sam_index:
     shell:
         "samtools sort {input} -o {output}"
 
-rule mpiluep:
+rule mpileup:
     input:
         "sorted/RV417026_S15_L001.bam",
         "workflow/ref.fasta",
