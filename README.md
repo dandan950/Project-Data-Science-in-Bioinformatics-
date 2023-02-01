@@ -102,3 +102,8 @@ use command `snakemake --cores 50 -p -F --use-conda` in `Project-Data-Science-in
 snakemake --cores 50 -p -F --use-conda
 ```
 
+```
+snakemake --cores 50 -p  --use-conda
+```
+
+
