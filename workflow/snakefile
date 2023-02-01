@@ -1,6 +1,6 @@
 rule all:
     input:        
-        "sorted/RV417026_S15_L001.mpileup.gz"
+       "sorted/RV417026_S15_L001.bcf"
 
 
 rule fastp:
@@ -60,18 +60,16 @@ rule sam_index:
     shell:
         "samtools sort {input} -o {output}"
 
-rule mpilup:
+rule mpiluep:
     input:
-        # single or list of bam files
-        bam="sorted/RV417026_S15_L001.bam",
-        reference_genome="workflow/ref.fasta",
+        "sorted/RV417026_S15_L001.bam",
+        "workflow/ref.fasta",
     output:
-        "sorted/RV417026_S15_L001.mpileup.gz",
-    log:
-        "logs/samtools/mpileup/RV417026_S15_L001.log",
-    params:
-        extra="-d 10000",  # optional
-    wrapper:
-        "v1.22.0/bio/samtools/mpileup"
+        "sorted/RV417026_S15_L001.bcf",
+    conda: 
+        "envs/mapping.yaml"
+    shell:
+        "samtools mpileup -gSDf {input[1]} {input[0]} -o {output}"
+
 
     
