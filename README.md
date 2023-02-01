@@ -63,7 +63,7 @@ snakemake</br>
 2.You need to decompress `fastq.gz` to `fastq`, using `gzip -d RV417002*` command in`original_fastq/FastqExamples` folder.</br>
 After decompressing, `.fastq` file is in `Project-Data-Science-in-Bioinformatics-/original_fastq/FastqExample` folder.</br>***
 ```
-gzip -d RV417002*
+gzip -d RV41702*
 ```
 
 * `Project-Data-Science-in-Bioinformatics-/workflow/ref.fasta`:  reference read data, used to align
