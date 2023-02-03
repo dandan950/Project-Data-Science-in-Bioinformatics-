@@ -1,4 +1,4 @@
-#here is bcftools code
+#here is samtools and bcftools code
 
 rule sam_sort:
     input:
