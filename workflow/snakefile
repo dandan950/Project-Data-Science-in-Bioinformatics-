@@ -1,7 +1,8 @@
 rule all:
-    input:        
-       "sorted/RV417026_S15_L001.bcf"
-
+    input:    
+        "result/RV417026_S15_L001_final.vcf.gz.tbi",    
+        "result/RV417026_S15_L001_consensus.fa",
+        
 
 rule fastp:
     input:
@@ -69,7 +70,59 @@ rule mpileup:
     conda: 
         "envs/mapping.yaml"
     shell:
-        "samtools mpileup -gSDf {input[1]} {input[0]} -o {output}"
+        "bcftools mpileup -Ob -o {output} -f {input[1]} {input[0]}"
+
+
+rule call_variant:
+    input:
+        "sorted/RV417026_S15_L001.bcf",
+    output:
+        "result/RV417026_S15_L001.vcf",
+    conda:
+        "envs/mapping.yaml"
+    shell:
+        "bcftools call -m -v -Ov -o {output} {input}" 
+
+rule filter_vcf:
+    input:
+        "result/RV417026_S15_L001.vcf",
+    output:
+        "result/RV417026_S15_L001_final.vcf",
+    conda:
+        "envs/mapping.yaml"
+    shell:
+        "vcfutils.pl varFilter {input} > {output}"
+
+rule vcf_bgzip:
+    input:
+        "result/RV417026_S15_L001_final.vcf",
+    output:
+        "result/RV417026_S15_L001_final.vcf.gz",
+    conda:
+        "envs/mapping.yaml"
+    shell:
+        "bcftools view {input} -Oz -o {output}"      
+
+rule vcf_index:
+    input:
+        "result/RV417026_S15_L001_final.vcf.gz",
+    output:
+        "result/RV417026_S15_L001_final.vcf.gz.tbi",
+    conda:
+        "envs/mapping.yaml"
+    shell:
+        "bcftools index -t -o {output} {input}" 
+
+rule consensus:
+    input:
+        "result/RV417026_S15_L001_final.vcf.gz",
+        "workflow/ref.fasta",
+    output:
+        "result/RV417026_S15_L001_consensus.fa",
+    conda:
+        "envs/mapping.yaml"
+    shell:
+        "bcftools consensus -f {input[1]} {input[0]} > {output}"
 
 
     
