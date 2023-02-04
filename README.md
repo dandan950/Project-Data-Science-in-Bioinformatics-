@@ -107,4 +107,9 @@ snakemake --cores 50 -p -F --use-conda
 snakemake --cores 50 -p  --use-conda
 ```
 
+how to download pangolin
+```
+mamba install pangolin
+```
+
 
