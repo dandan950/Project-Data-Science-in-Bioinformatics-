@@ -1,1 +1,10 @@
 original_fastq/
+.snakemake
+midresult
+sorted
+filrered_result
+result
+*.html
+*.json
+mapped
+*.fai
