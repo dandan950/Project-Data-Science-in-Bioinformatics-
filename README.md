@@ -59,6 +59,7 @@ snakemake</br>
 
 * `Project-Data-Science-in-Bioinformatics-/original_fastq/FastqExamples`: original read data(.fastq/.fastq.gz). </br>
 *But `original_fastq` is ignored, which you could see in `.gitignore`, that means `original_fastq` will be not uploaded to github. As read(.fastq) is too big that it can't be uploaded into github.*</br>
+The original read files are in `local/work` in server
 
 ***1.You need to self create `Project-Data-Science-in-Bioinformatics-/original_fastq/FastqExamples` folder. And put data to the folder.</br>
 2.You need to decompress `fastq.gz` to `fastq`, using `gzip -d RV417002*` command in`original_fastq/FastqExamples` folder.</br>
@@ -104,6 +105,11 @@ snakemake --cores 50 -p -F --use-conda
 
 ```
 snakemake --cores 50 -p  --use-conda
+```
+
+how to download pangolin
+```
+mamba install pangolin
 ```
 
 
