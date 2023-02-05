@@ -1,41 +1,65 @@
+SAMPLES = ["RV417026_S15_L001", "RV417027_S18_L001", "RV417028_S20_L001","RV417029_S19_L001"]
+
 rule all:
-    input:    
-        "result/RV417026_S15_L001_final.vcf.gz.tbi",    
-        "result/RV417026_S15_L001_consensus.fa",
-        
+    input:  
+        expand("result/{sample}_consensus.fa",sample=SAMPLES),
+        directory(expand('fastqc_report/before/{sample}',sample=SAMPLES)), 
+        directory(expand('fastqc_report/after/{sample}',sample=SAMPLES)) 
+
+
+
+rule qc_before:
+    input:
+        "original_fastq/FastqExamples/{sample}_R1_001.fastq",
+        "original_fastq/FastqExamples/{sample}_R2_001.fastq",
+    output:
+        directory('fastqc_report/before/{sample}')    
+    conda:
+        "envs/mapping.yaml"
+    shell:
+        "mkdir -p {output} && fastqc -o {output} -t 16 {input[0]} {input[1]}"  
 
 rule fastp:
     input:
-        "original_fastq/FastqExamples/RV417026_S15_L001_R1_001.fastq",
-        "original_fastq/FastqExamples/RV417026_S15_L001_R2_001.fastq"
+        "original_fastq/FastqExamples/{sample}_R1_001.fastq",
+        "original_fastq/FastqExamples/{sample}_R2_001.fastq",
     output:
-        "filrered_result/RV417026_S15_L001_R1_001.cleaned.fastq",
-        "filrered_result/RV417026_S15_L001_R2_001.cleaned.fastq"
+        "filtered_result/{sample}_R1_001.cleaned.fastq",
+        "filtered_result/{sample}_R2_001.cleaned.fastq"
     conda:
         "envs/mapping.yaml"
     shell:
         "fastp -i {input[0]} -o {output[0]} -I {input[1]} -O {output[1]} -q 20 -c -y -l 50 -g -p -f 10 -n 5 --adapter_sequence GCGAATTTCGACGATCGTTGCATTAACTCGCGAA --adapter_sequence_r2 AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT"
 
 
-rule bwa_mem:
+rule qc_after:
     input:
-        "filrered_result/RV417026_S15_L001_R1_001.cleaned.fastq",
-        "filrered_result/RV417026_S15_L001_R2_001.cleaned.fastq",
-        "workflow/ref.fasta"
+        "filtered_result/{sample}_R1_001.cleaned.fastq",
+        "filtered_result/{sample}_R2_001.cleaned.fastq",
     output:
-        "mapped/RV417026_S15_L001.bam",
-        multiext("midresult/ref", ".amb", ".ann", ".bwt", ".pac", ".sa")
+         directory('fastqc_report/after/{sample}')   
     conda:
         "envs/mapping.yaml"
     shell:
-        "bwa index {input[2]} -p midresult/ref;"
+        "mkdir -p {output} && fastqc -o {output} -t 16 {input[0]} {input[1]}"  
+
+
+rule bwa_mem:
+    input:
+        "filtered_result/{sample}_R1_001.cleaned.fastq",
+        "filtered_result/{sample}_R2_001.cleaned.fastq",
+    output:
+        "mapped/{sample}.bam"
+    conda:
+        "envs/mapping.yaml"
+    shell:
         "bwa mem -p midresult/ref {input[0]} {input[1]} -o {output[0]}"
 
 rule sam_view:
     input:
-        "mapped/RV417026_S15_L001.bam"
+        "mapped/{sample}.bam"
     output:
-        "mapped/RV417026_S15_L001_1.bam"
+        "mapped/{sample}_1.bam"
     conda:
         "envs/mapping.yaml"
     shell:
@@ -43,19 +67,30 @@ rule sam_view:
     
 rule sam_sort:
     input:
-        "mapped/RV417026_S15_L001_1.bam"
+        "mapped/{sample}_1.bam"
     output:
-        "sorted/RV417026_S15_L001.bam"
+        "sorted/{sample}.bam"
     conda:
         "envs/mapping.yaml"
     shell:
         "samtools sort {input} -o {output}"
 
+rule remove_duplicates:
+    input:
+        "sorted/{sample}.bam"
+    output:
+        "sorted/{sample}.markdup.bam",
+        "sorted/{sample}.markdup_metrics.txt"
+    conda:
+        "envs/mapping.yaml"
+    shell:
+        "picard MarkDuplicates -I {input} -O {output[0]} -M {output[1]}"            
+
 rule sam_index:
     input:
-        "sorted/RV417026_S15_L001.bam"
+        "sorted/{sample}.markdup.bam",
     output:
-        "sorted/RV417026_S15_L001.bam.bai"
+        "sorted/{sample}.bam.bai"
     conda:
         "envs/mapping.yaml"
     shell:
@@ -63,10 +98,10 @@ rule sam_index:
 
 rule mpileup:
     input:
-        "sorted/RV417026_S15_L001.bam",
+        "sorted/{sample}.markdup.bam",
         "workflow/ref.fasta",
     output:
-        "sorted/RV417026_S15_L001.bcf",
+        "sorted/{sample}.bcf",
     conda: 
         "envs/mapping.yaml"
     shell:
@@ -75,9 +110,9 @@ rule mpileup:
 
 rule call_variant:
     input:
-        "sorted/RV417026_S15_L001.bcf",
+        "sorted/{sample}.bcf",
     output:
-        "result/RV417026_S15_L001.vcf",
+        "result/{sample}.vcf",
     conda:
         "envs/mapping.yaml"
     shell:
@@ -85,9 +120,9 @@ rule call_variant:
 
 rule filter_vcf:
     input:
-        "result/RV417026_S15_L001.vcf",
+        "result/{sample}.vcf",
     output:
-        "result/RV417026_S15_L001_final.vcf",
+        "result/{sample}_final.vcf",
     conda:
         "envs/mapping.yaml"
     shell:
@@ -95,34 +130,23 @@ rule filter_vcf:
 
 rule vcf_bgzip:
     input:
-        "result/RV417026_S15_L001_final.vcf",
+        "result/{sample}_final.vcf",
     output:
-        "result/RV417026_S15_L001_final.vcf.gz",
+        "result/{sample}_final.vcf.gz",
     conda:
         "envs/mapping.yaml"
     shell:
         "bcftools view {input} -Oz -o {output}"      
 
-rule vcf_index:
-    input:
-        "result/RV417026_S15_L001_final.vcf.gz",
-    output:
-        "result/RV417026_S15_L001_final.vcf.gz.tbi",
-    conda:
-        "envs/mapping.yaml"
-    shell:
-        "bcftools index -t -o {output} {input}" 
-
 rule consensus:
     input:
-        "result/RV417026_S15_L001_final.vcf.gz",
+        "result/{sample}_final.vcf.gz",
         "workflow/ref.fasta",
     output:
-        "result/RV417026_S15_L001_consensus.fa",
+        "result/{sample}_final.vcf.gz.tbi",
+        "result/{sample}_consensus.fa",
     conda:
         "envs/mapping.yaml"
     shell:
-        "bcftools consensus -f {input[1]} {input[0]} > {output}"
-
-
-    
+        "bcftools index -t -o {output[0]} {input[0]} && bcftools consensus -f {input[1]} {input[0]} > {output[1]}"
+ 
