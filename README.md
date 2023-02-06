@@ -8,15 +8,13 @@
 | Chengcheng LI | 
 
 
-### Pipeline
+### Two Pipelines
 
 we use `snakemake` to help us to simpllify the progress and use `vscode` to connect the server `c44` .
 
-And Our pipeline design is the following:
+And we design two pipelines, the following:
 
 - QC and filter low quality read data --> read align-->read sort-->assemble-->variant detection
-
-Now the schedule is the following:
 
 - [x] QC and filter low quality read data
 - [x] read align
@@ -24,21 +22,16 @@ Now the schedule is the following:
 - [x] assemble
 - [x] variant detection
 
+- QC and filter low quality read data -->de novo assembly(Fragments -> Contigs -> Scaffolds) -->variant detection
 
-### Contribution
+- [x] QC and filter low quality read data
+- [x] de novo assembly(Fragments -> Contigs -> Scaffolds)
+- [x] variant detection
 
-|  Member       | Contribution|
-|  ----------   |-------------|
-| Ruidan LIU    | read sort (samtools)   |
-| Yifei YAO     | read align (bwa)|
-| Hong YANG     | QC and filter low quality read data (fastq)|
-| Chengcheng LI | assemble |
 
 # Pipeline Implement and Explanation
 
 ### Tools
-
-We design to use some biotools to help us to implement the pipeline.
 
 conda</br>
 snakemake</br>
@@ -47,53 +40,39 @@ snakemake</br>
 - bcftools >=1.9
 - samtools >=1.9
 - bwa =0.7.17
+- picard
+- megahit=1.2.9
+- ragtag
+- quast
+
 
 ### Pipeline Workflow Explanation
 
-##### Read Data Explanation
+##### Create Original Data Folder
 
-* `Project-Data-Science-in-Bioinformatics-/original_fastq/FastqExamples`: original read data(.fastq/.fastq.gz). </br>
-*But `original_fastq` is ignored, which you could see in `.gitignore`, that means `original_fastq` will be not uploaded to github. As read(.fastq) is too big that it can't be uploaded into github.*</br>
+* `Project-Data-Science-in-Bioinformatics-/original_fastq`: original read data(.fastq/.fastq.gz). </br>
+But `original_fastq` is ignored, which you could see in `.gitignore`, that means `original_fastq` will be not uploaded to github. As read(.fastq) is too big that it can't be uploaded into github.</br>
 The original read files are in `local/work` in server
 
-***1.You need to self create `Project-Data-Science-in-Bioinformatics-/original_fastq/FastqExamples` folder. And put data to the folder.</br>
-2.You need to decompress `fastq.gz` to `fastq`, using `gzip -d RV417002*` command in`original_fastq/FastqExamples` folder.</br>
-After decompressing, `.fastq` file is in `Project-Data-Science-in-Bioinformatics-/original_fastq/FastqExample` folder.</br>***
+
+1.You need to self create `Project-Data-Science-in-Bioinformatics-/original_fastq` folder. And put data to the folder.</br>
 ```
 tar -zxvf FastqExamples.tar.gz -C /homes/hong.yang/Project-Data-Science-in-Bioinformatics-/original_fastq/
 ```
+2.You need to decompress `fastq.gz` to `fastq`, using `gzip -d RV417002*` command in`original_fastq/FastqExamples` folder.</br>
+After decompressing, `.fastq` file is in `Project-Data-Science-in-Bioinformatics-/original_fastq/FastqExample` folder.</br>
 
 ```
 gzip -d RV41702*
 ```
 
-
-
-
-* `Project-Data-Science-in-Bioinformatics-/workflow/ref.fasta`:  reference read data, used to align
-
-##### Source Code Explanation
+##### File Explanation
 * `Project-Data-Science-in-Bioinformatics-/workflow` folder: source code folder </br>
   * `workflow/snakefile`: this is code of pipeline, using snakemake to manage.</br>
   * `workflow/envs/mapping.yaml`: is the environment
-
-
-
-
+  
 # How to Run
-we use `main.py` to run
+we use `main.py` to run, `main.py` could connect snakefile, pangolin and could display result.
 ```
 python3 main.py
 ```
-
-
-### Some Commands
-
-```
-fastqc -o ../../cleaned_fastqc_result/ -t 16 RV417026_S15_L001_R1_001.cleaned.fasq.gz RV417026_S15_L001_R2_001.cleaned.fastq.gz
-```
-
-```
-fastp -i RV417026_S15_L001_R1_001.fastq.gz -o RV417026_S15_L001_R1_001.cleaned.fasq.gz -I RV417026_S15_L001_R2_001.fastq.gz -O RV417026_S15_L001_R2_001.cleaned.fastq.gz -q 20 -c -y -l 50 -g -p -f 10 -n 5 --adapter_sequence GCGAATTTCGACGATCGTTGCATTAACTCGCGAA --adapter_sequence_r2 AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT
-```
-
