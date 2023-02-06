@@ -8,3 +8,6 @@ dependencies:
   - samtools >=1.9
   - bwa =0.7.17
   - picard
+  - megahit=1.2.9
+  - ragtag
+  - quast
