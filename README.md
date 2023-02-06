@@ -1,4 +1,4 @@
-# Project-Data-Science-in-Bioinformatics 
+# User Manual
 
 |  Member       | 
 |  ----         |
@@ -8,7 +8,7 @@
 | Chengcheng LI | 
 
 
-### Two Pipelines
+### Pipelines Introduction
 
 we use `snakemake` to help us to simpllify the progress and use `vscode` to connect the server `c44` .
 
@@ -30,9 +30,7 @@ And we design two pipelines, the following:
 - [x] lineage detection
 
 
-# Pipeline Implement and Explanation
-
-### Tools
+##### Tools
 
 conda</br>
 snakemake</br>
@@ -47,7 +45,7 @@ snakemake</br>
 - quast
 
 
-### Pipeline Workflow Explanation
+# Before You Use
 
 Before you use our pipeline, you should create original data folder firstly. And put original data into the folder, then decompress gz files(.fastq.gz -> .fastq). The following is more details:
 
@@ -69,16 +67,10 @@ After decompressing, `.fastq` file is in `Project-Data-Science-in-Bioinformatics
 gzip -d RV41702*
 ```
 
-##### Somes Files Explanation
-* `Project-Data-Science-in-Bioinformatics-/workflow` folder: source code folder </br>
-  * `workflow/snakefile`: this is code of pipeline, using snakemake to manage.</br>
-  * `workflow/envs/mapping.yaml`: is the environment
-* `main.py`: connect snakefile, pangolin and display . 
-* `env.sh` : configuration environment automatically.
   
 # How to Run
 
-You should use the following steps:
+You should use the following steps in`Project-Data-Science-in-Bioinformatics-` folder:
 ```
 bash env.sh
 ```
@@ -90,3 +82,9 @@ conda activate pangolin
 ```
 python3 main.py
 ```
+# Somes Files Explanation
+* `Project-Data-Science-in-Bioinformatics-/workflow` folder: source code folder </br>
+  * `workflow/snakefile`: this is code of pipeline, using snakemake to manage.</br>
+  * `workflow/envs/mapping.yaml`: is the environment
+* `main.py`: connect snakefile, pangolin and display . 
+* `env.sh` : configuration environment automatically.
