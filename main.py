@@ -27,7 +27,7 @@ def bwa_index():
 
 
 def run_snakemake():
-    envstr="source ~/mambaforge/etc/profile.d/conda.sh;conda activate pangolin;"
+    envstr="source ~/mambaforge/etc/profile.d/conda.sh;source ~/miniconda3/etc/profile.d/conda.sh;;conda activate pangolin;"
     snakemakestr=" snakemake -c10  --use-conda;"
     bwa=bwa_index()
     pangolinstr=""
