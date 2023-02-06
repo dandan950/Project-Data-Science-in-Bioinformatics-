@@ -77,6 +77,7 @@ we use `bash env.sh`and `main.py` to run, </br>
 
 `main.py` could connect snakefile, pangolin and display result.</br>
 `env.sh` Configuration Environment</br>
+You should use the following step:
 ```
 bash env.sh
 ```
