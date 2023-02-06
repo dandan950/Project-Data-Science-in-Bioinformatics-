@@ -81,21 +81,11 @@ gzip -d RV41702*
 
 
 # How to Run
-
-use command `snakemake --cores 50 -p -F --use-conda` in `Project-Data-Science-in-Bioinformatics-` folder, not in `Project-Data-Science-in-Bioinformatics-/workflow` folder.
-
+we use `main.py` to run
 ```
-snakemake --cores 50 -p -F --use-conda
+python3 main.py
 ```
 
-```
-snakemake --cores 50 -p  --use-conda
-```
-
-how to download pangolin
-```
-mamba install pangolin
-```
 
 ### Some Commands
 
