@@ -14,13 +14,13 @@ we use `snakemake` to help us to simpllify the progress and use `vscode` to conn
 
 And we design two pipelines, the following:
 
-- QC and filter low quality read data --> read align-->read sort-->variant calling-->assemble-->lineage detection
+- QC and filter low quality read data --> read align-->read sort-->variant calling-->create consensus sequence -->lineage detection
 
 - [x] QC and filter low quality read data
 - [x] read align
 - [x] read sort
 - [x] variant calling
-- [x] assemble
+- [x] create consensus sequence 
 - [x] lineage detection
 
 - QC and filter low quality read data -->de novo assembly(Fragments -> Contigs -> Scaffolds) -->lineage detection
