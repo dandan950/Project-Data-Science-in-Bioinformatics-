@@ -11,7 +11,7 @@ def pangolinexec(inputfile="", outputfile=""):
     return execstr+"; "
 SAMPLES = ["RV417026_S15_L001", "RV417027_S18_L001", "RV417028_S20_L001","RV417029_S19_L001"]
 def final_display():
-    print(" Pangolin don't have B.1.545 from it's lineage list: https://cov-lineages.org/lineage_list.html ")
+    
     for i in SAMPLES:
         filename="result/"+i+'.csv'
 
