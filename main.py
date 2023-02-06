@@ -17,7 +17,7 @@ def final_display():
         with open(filename, newline='') as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
-                print("From ",i,"the variant is:",row['lineage'])
+                print("From ",i,"the lineage is:",row['lineage'])
 
 def bwa_index():
     pass
