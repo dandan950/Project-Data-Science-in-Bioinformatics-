@@ -8,8 +8,6 @@
 | Chengcheng LI | 
 
 
-Our project will show in 2 parts: pipeline and GUI
-
 ### Pipeline
 
 we use `snakemake` to help us to simpllify the progress and use `vscode` to connect the server `c44` .
