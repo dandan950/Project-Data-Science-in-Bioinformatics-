@@ -1,62 +1,71 @@
+SAMPLES = ["RV417026_S15_L001", "RV417027_S18_L001", "RV417028_S20_L001","RV417029_S19_L001"]
+
 rule all:
-    input:        
-        directory("quast_report")
+    input:
+        expand("ragtag_output/correct/{sample}/ragtag.correct.fasta" ,sample=SAMPLES), 
+        expand("ragtag_output/scaffold/{sample}/ragtag.scaffold.fasta" ,sample=SAMPLES),       
+        directory(expand('quast_report/{sample}',sample=SAMPLES)), 
+        expand("megahit_result/{sample}/final.contigs.fa",sample=SAMPLES)
+
         
-# rule fastp:
-#     input:
-#         "original_fastq/FastqExamples/RV417027_S18_L001_R1_001.fastq",
-#         "original_fastq/FastqExamples/RV417027_S18_L001_R2_001.fastq"
-#     output:
-#         "filrered_result/RV417027_S18_L001_R1_001.cleaned.fastq",
-#         "filrered_result/RV417027_S18_L001_R2_001.cleaned.fastq"
-#     conda:
-#         "envs/mapping.yaml"
-#     shell:
-#         "fastp -i {input[0]} -o {output[0]} -I {input[1]} -O {output[1]} -q 20 -c -y -l 50 -g -p -f 10 -n 5 --adapter_sequence GCGAATTTCGACGATCGTTGCATTAACTCGCGAA --adapter_sequence_r2 AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT"
+rule fastp:
+    input:
+        "original_fastq/FastqExamples/{sample}_R1_001.fastq",
+        "original_fastq/FastqExamples/{sample}_R2_001.fastq",
+    output:
+        "filtered_result/{sample}_R1_001.cleaned.fastq",
+        "filtered_result/{sample}_R2_001.cleaned.fastq"
+    conda:
+        "envs/mapping.yaml"
+    shell:
+        "fastp -i {input[0]} -o {output[0]} -I {input[1]} -O {output[1]} -q 20 -c -y -l 50 -g -p -f 10 -n 5 --adapter_sequence GCGAATTTCGACGATCGTTGCATTAACTCGCGAA --adapter_sequence_r2 AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT"
 
 
 rule megahit:
     input:
-        "filrered_result/RV417027_S18_L001_R1_001.cleaned.fastq",
-        "filrered_result/RV417027_S18_L001_R2_001.cleaned.fastq"
+        "filtered_result/{sample}_R1_001.cleaned.fastq",
+        "filtered_result/{sample}_R2_001.cleaned.fastq"
     output:
-        "megahit_result/final.contigs.fa"
+        out_dir = directory("megahit_result/{sample}/"),
+        fasta = "megahit_result/{sample}/final.contigs.fa"
     conda:
         "envs/mapping.yaml"
     shell:
-        "megahit -1 {input[0]} -2 {input[1]} -f -o megahit_result"
+        "megahit -1 {input[0]} -2 {input[1]} -f -o {output.out_dir}"
 
 rule ragtag_correct:
     input:
         "workflow/ref.fasta",
-        "megahit_result/final.contigs.fa"   
+        "megahit_result/{sample}/final.contigs.fa"   
     output:
-         multiext("ragtag_output/ragtag.correct", ".agp", ".asm.paf", ".asm.paf.log", ".err", ".fasta")
+        out_dir = directory("ragtag_output/correct/{sample}"),
+        fasta = "ragtag_output/correct/{sample}/ragtag.correct.fasta"
     conda:
         "envs/mapping.yaml"
     shell:
-        "ragtag.py correct {input[0]} {input[1]}  -t 8"
+        "ragtag.py correct {input[0]} {input[1]} -o{output.out_dir} -t 8"
 
 rule ragtag_scaffold:
     input:
         "workflow/ref.fasta",
-        "ragtag_output/ragtag.correct.fasta"       
+        "ragtag_output/correct/{sample}/ragtag.correct.fasta"       
     output:
-        multiext("ragtag_output/ragtag.scaffold", ".agp", ".asm.paf",".confidence.txt", ".asm.paf.log", ".err", ".fasta",".stats")       
+        out_dir = directory("ragtag_output/scaffold/{sample}"),
+        fasta = "ragtag_output/scaffold/{sample}/ragtag.scaffold.fasta"       
     conda:
         "envs/mapping.yaml"
     shell:
-        "ragtag.py scaffold {input[0]} {input[1]} -o ragtag_output "
+        "ragtag.py scaffold {input[0]} {input[1]} -o {output.out_dir} "
 
 
 rule quast:
     input:
-        "megahit_result/final.contigs.fa",
+        "megahit_result/{sample}/final.contigs.fa",
         "workflow/ref.fasta",
-        "original_fastq/FastqExamples/RV417026_S15_L001_R1_001.fastq",
-        "original_fastq/FastqExamples/RV417026_S15_L001_R2_001.fastq"
+        "original_fastq/FastqExamples/{sample}_R1_001.fastq",
+        "original_fastq/FastqExamples/{sample}_R2_001.fastq"
     output:
-        directory("quast_report")
+        directory('quast_report/{sample}')
     conda:
         "envs/mapping.yaml"
     shell:
