@@ -88,5 +88,5 @@ python3 main.py
 * `Project-Data-Science-in-Bioinformatics-/workflow` folder: source code folder </br>
   * `workflow/snakefile`: this is code of pipeline, using snakemake to manage.</br>
   * `workflow/envs/mapping.yaml`: is the environment
-* `main.py`: connect snakefile, pangolin and display . 
+* `main.py`: connect snakefile, pangolin，generate midresult and display results. 
 * `env.sh` : configuration environment automatically.
