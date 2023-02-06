@@ -23,10 +23,11 @@ And we design two pipelines, the following:
 - [x] create consensus sequence 
 - [x] lineage detection
 
-- `de novo assembly pipeline` QC and filter low quality read data -->de novo assembly(Fragments -> Contigs -> Scaffolds) -->lineage detection
+- `de novo assembly pipeline` QC and filter low quality read data -->de novo assembly(Fragments -> Contigs -> Scaffolds) --> quast evaluation-->lineage detection
 
 - [x] QC and filter low quality read data
 - [x] de novo assembly(Fragments -> Contigs -> Scaffolds)
+- [x] quast evaluation
 - [x] lineage detection
 
 
