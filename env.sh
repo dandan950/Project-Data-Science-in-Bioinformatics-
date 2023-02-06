@@ -10,4 +10,5 @@ cd pangolin;
 conda env create -f environment.yml; 
 conda activate pangolin;
 pip install .;
-mamba install -c conda-forge -c bioconda  snakemake -y;
+mamba install -c conda-forge -c bioconda snakemake -y;
+mamba install -c conda-forge -c bioconda bwa -y;
