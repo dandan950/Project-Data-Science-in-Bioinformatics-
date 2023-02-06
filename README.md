@@ -48,7 +48,7 @@ snakemake</br>
 
 
 ### Pipeline Workflow Explanation
-Before you use our pipeline, you should create original data folder firstly.
+Before you use our pipeline, you should create original data folder firstly. And put original data into the folder, then decompress(.fastq.gz -> .fastq) 
 
 ##### Create Original Data Folder
 
