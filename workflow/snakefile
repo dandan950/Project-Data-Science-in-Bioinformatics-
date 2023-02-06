@@ -148,5 +148,5 @@ rule consensus:
     conda:
         "envs/mapping.yaml"
     shell:
-        "bcftools index -t -o {output[0]} {input[0]} && bcftools consensus -f {input[1]} {input[0]} > {output[1]}"
+        "bcftools index -t -o {output[0]} {input[0]}; bcftools consensus -f {input[1]} {input[0]} > {output[1]}"
  
