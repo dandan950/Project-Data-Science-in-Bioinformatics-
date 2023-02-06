@@ -1,5 +1,7 @@
 import os
 import sys
+import csv
+
 def pangolinexec(inputfile="", outputfile=""):
     execstr=""
     if inputfile!="":
@@ -8,6 +10,14 @@ def pangolinexec(inputfile="", outputfile=""):
             execstr=execstr + " --outfile " + outputfile
     return execstr+"; "
 SAMPLES = ["RV417026_S15_L001", "RV417027_S18_L001", "RV417028_S20_L001","RV417029_S19_L001"]
+def final_display():
+    for i in SAMPLES:
+        filename="result/"+i+'.csv'
+
+        with open(filename, newline='') as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                print("From ",i,"the variant is:",row['lineage'])
 
 def bwa_index():
     pass
@@ -28,4 +38,5 @@ def run_snakemake():
     os.system(condastr)
 
 if __name__ == "__main__":
-    run_snakemake()
+    #run_snakemake()
+    final_display()
