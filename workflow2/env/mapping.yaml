@@ -1,0 +1,14 @@
+channels:
+  - bioconda
+  - conda-forge
+dependencies:
+  - fastqc >=0.11.9
+  - fastp >=0.22.0
+  - bcftools >=1.9
+  - samtools >=1.9
+  - bwa =0.7.17
+  - picard
+  - snakemake-wrapper-utils=0.5.0
+  - megahit=1.2.9
+  - ragtag
+  - quast
