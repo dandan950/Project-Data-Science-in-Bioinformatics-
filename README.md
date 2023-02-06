@@ -75,5 +75,9 @@ gzip -d RV41702*
 we use `main.py` to run, `main.py` could connect snakefile, pangolin and display result.</br>
 Before you run, please make sure your computer install python 
 ```
+bash env.sh
+```
+
+```
 python3 main.py
 ```
