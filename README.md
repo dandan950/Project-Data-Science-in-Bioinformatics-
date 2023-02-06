@@ -81,5 +81,9 @@ bash env.sh
 ```
 
 ```
+conda activate pangolin
+```
+
+```
 python3 main.py
 ```
