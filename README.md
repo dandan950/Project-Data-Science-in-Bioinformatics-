@@ -72,7 +72,8 @@ gzip -d RV41702*
   * `workflow/envs/mapping.yaml`: is the environment
   
 # How to Run
-we use `main.py` to run, `main.py` could connect snakefile, pangolin and could display result.
+we use `main.py` to run, `main.py` could connect snakefile, pangolin and display result.</br>
+Before you run, please make sure your computer install python 
 ```
 python3 main.py
 ```
