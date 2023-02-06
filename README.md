@@ -23,8 +23,8 @@ Now the schedule is the following:
 - [x] QC and filter low quality read data
 - [x] read align
 - [x] read sort
-- [ ] assemble
-- [ ] variant detection
+- [x] assemble
+- [x] variant detection
 
 ### GUI
 
