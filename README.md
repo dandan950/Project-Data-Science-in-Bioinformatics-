@@ -26,9 +26,6 @@ Now the schedule is the following:
 - [x] assemble
 - [x] variant detection
 
-### GUI
-
-we plan to use a web to show our result
 
 ### Contribution
 
@@ -92,8 +89,6 @@ fastqc -o ../../cleaned_fastqc_result/ -t 16 RV417026_S15_L001_R1_001.cleaned.fa
 fastp -i RV417026_S15_L001_R1_001.fastq.gz -o RV417026_S15_L001_R1_001.cleaned.fasq.gz -I RV417026_S15_L001_R2_001.fastq.gz -O RV417026_S15_L001_R2_001.cleaned.fastq.gz -q 20 -c -y -l 50 -g -p -f 10 -n 5 --adapter_sequence GCGAATTTCGACGATCGTTGCATTAACTCGCGAA --adapter_sequence_r2 AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT
 ```
 
-
-# GUI Implement and Explanation
 
 # How to Run
 
