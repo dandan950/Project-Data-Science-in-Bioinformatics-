@@ -51,17 +51,16 @@ Before you use our pipeline, you should create original data folder firstly. And
 
 ##### Create Original Data Folder
 
-* `Project-Data-Science-in-Bioinformatics-/original_fastq`: original read data(.fastq/.fastq.gz). </br>
-But `original_fastq` is ignored, which you could see in `.gitignore`, that means `original_fastq` will be not uploaded to github. As read(.fastq) is too big that it can't be uploaded into github.</br>
-The original read files are in `local/work` in server
+* The original read files are in `local/work` in server. You need to create `original_fastq` folder, it use to put original read data(.fastq/.fastq.gz). </br>
+`original_fastq` is ignored, which you could see in `.gitignore`</br>
 
 
-1.You need to self create `Project-Data-Science-in-Bioinformatics-/original_fastq` folder. And put data to the folder.</br>
+You need to self create `Project-Data-Science-in-Bioinformatics-/original_fastq` folder. And put data to the folder.</br>
 ```
 tar -zxvf FastqExamples.tar.gz -C /homes/hong.yang/Project-Data-Science-in-Bioinformatics-/original_fastq/
 ```
 ##### Decompression
-2.You need to decompress `fastq.gz` to `fastq`, using `gzip -d RV417002*` command in`original_fastq/FastqExamples` folder.</br>
+You need to decompress `fastq.gz` to `fastq`, using `gzip -d RV417002*` command in`original_fastq/FastqExamples` folder.</br>
 After decompressing, `.fastq` file is in `Project-Data-Science-in-Bioinformatics-/original_fastq/FastqExample` folder.</br>
 
 ```
