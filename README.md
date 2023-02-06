@@ -73,12 +73,10 @@ gzip -d RV41702*
   * `workflow/snakefile`: this is code of pipeline, using snakemake to manage.</br>
   * `workflow/envs/mapping.yaml`: is the environment
 * `main.py`: connect snakefile, pangolin and display. 
+* `env.sh` : configuration environment automatically.
   
 # How to Run
-we use `bash env.sh`and `main.py` to run, </br>
 
-`main.py` could connect snakefile, pangolin and display result.</br>
-`env.sh` Configuration Environment</br>
 You should use the following steps:
 ```
 bash env.sh
