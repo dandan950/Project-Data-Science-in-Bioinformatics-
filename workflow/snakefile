@@ -1,153 +1,72 @@
+SAMPLES = ["RV417026_S15_L001", "RV417027_S18_L001", "RV417028_S20_L001","RV417029_S19_L001"]
+
 rule all:
-    input:  
-        "result/RV417029_S19_L001_consensus.fa",  
-        # "sorted/RV417026_S15_L001.markdup.bam",
-        directory('fastqc_report/before'),
-        directory('fastqc_report/after'),
-        # directory('pangolin_result')   
-
-rule qc_before:
     input:
-        "original_fastq/FastqExamples/RV417029_S19_L001_R1_001.fastq",
-        "original_fastq/FastqExamples/RV417029_S19_L001_R2_001.fastq",
-    output:
-        directory('fastqc_report/before')    
-    conda:
-        "envs/mapping.yaml"
-    shell:
-        "mkdir -p {output} && fastqc -o {output} -t 16 {input[0]} {input[1]}"  
+        expand("ragtag_output/correct/{sample}/ragtag.correct.fasta" ,sample=SAMPLES), 
+        expand("ragtag_output/scaffold/{sample}/ragtag.scaffold.fasta" ,sample=SAMPLES),       
+        directory(expand('quast_report/{sample}',sample=SAMPLES)), 
+        expand("megahit_result/{sample}/final.contigs.fa",sample=SAMPLES)
 
+        
 rule fastp:
     input:
-        "original_fastq/FastqExamples/RV417029_S19_L001_R1_001.fastq",
-        "original_fastq/FastqExamples/RV417029_S19_L001_R2_001.fastq",
+        "original_fastq/FastqExamples/{sample}_R1_001.fastq",
+        "original_fastq/FastqExamples/{sample}_R2_001.fastq",
     output:
-        "filtered_result/RV417029_S19_L001_R1_001.cleaned.fastq",
-        "filtered_result/RV417029_S19_L001_R2_001.cleaned.fastq"
+        "filtered_result/{sample}_R1_001.cleaned.fastq",
+        "filtered_result/{sample}_R2_001.cleaned.fastq"
     conda:
         "envs/mapping.yaml"
     shell:
         "fastp -i {input[0]} -o {output[0]} -I {input[1]} -O {output[1]} -q 20 -c -y -l 50 -g -p -f 10 -n 5 --adapter_sequence GCGAATTTCGACGATCGTTGCATTAACTCGCGAA --adapter_sequence_r2 AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT"
 
 
-rule qc_after:
+rule megahit:
     input:
-        "filtered_result/RV417029_S19_L001_R1_001.cleaned.fastq",
-        "filtered_result/RV417029_S19_L001_R2_001.cleaned.fastq"
+        "filtered_result/{sample}_R1_001.cleaned.fastq",
+        "filtered_result/{sample}_R2_001.cleaned.fastq"
     output:
-        directory('fastqc_report/after')    
+        out_dir = directory("megahit_result/{sample}/"),
+        fasta = "megahit_result/{sample}/final.contigs.fa"
     conda:
         "envs/mapping.yaml"
     shell:
-        "mkdir -p {output} && fastqc -o {output} -t 16 {input[0]} {input[1]}"  
+        "megahit -1 {input[0]} -2 {input[1]} -f -o {output.out_dir}"
 
-
-rule bwa_mem:
+rule ragtag_correct:
     input:
-        "filtered_result/RV417029_S19_L001_R1_001.cleaned.fastq",
-        "filtered_result/RV417029_S19_L001_R2_001.cleaned.fastq",
-        "workflow/ref.fasta"
-    output:
-        "mapped/RV417029_S19_L001.bam",
-        multiext("midresult/ref", ".amb", ".ann", ".bwt", ".pac", ".sa")
-    conda:
-        "envs/mapping.yaml"
-    shell:
-        "bwa index {input[2]} -p midresult/ref;"
-        "bwa mem -p midresult/ref {input[0]} {input[1]} -o {output[0]}"
-
-rule sam_view:
-    input:
-        "mapped/RV417029_S19_L001.bam"
-    output:
-        "mapped/RV417029_S19_L001_1.bam"
-    conda:
-        "envs/mapping.yaml"
-    shell:
-        "samtools view -b {input} -o {output}"
-    
-rule sam_sort:
-    input:
-        "mapped/RV417029_S19_L001_1.bam"
-    output:
-        "sorted/RV417029_S19_L001.bam"
-    conda:
-        "envs/mapping.yaml"
-    shell:
-        "samtools sort {input} -o {output}"
-
-rule remove_duplicates:
-    input:
-        "sorted/RV417029_S19_L001.bam"
-    output:
-        "sorted/RV417029_S19_L001.markdup.bam",
-        "sorted/RV417029_S19_L001.markdup_metrics.txt"
-    conda:
-        "envs/mapping.yaml"
-    shell:
-        "picard MarkDuplicates -I {input} -O {output[0]} -M {output[1]}"            
-
-rule sam_index:
-    input:
-        "sorted/RV417029_S19_L001.markdup.bam",
-    output:
-        "sorted/RV417029_S19_L001.bam.bai"
-    conda:
-        "envs/mapping.yaml"
-    shell:
-        "samtools sort {input} -o {output}"
-
-rule mpileup:
-    input:
-        "sorted/RV417029_S19_L001.markdup.bam",
         "workflow/ref.fasta",
+        "megahit_result/{sample}/final.contigs.fa"   
     output:
-        "sorted/RV417029_S19_L001.bcf",
-    conda: 
-        "envs/mapping.yaml"
-    shell:
-        "bcftools mpileup -Ob -o {output} -f {input[1]} {input[0]}"
-
-
-rule call_variant:
-    input:
-        "sorted/RV417029_S19_L001.bcf",
-    output:
-        "result/RV417029_S19_L001.vcf",
+        out_dir = directory("ragtag_output/correct/{sample}"),
+        fasta = "ragtag_output/correct/{sample}/ragtag.correct.fasta"
     conda:
         "envs/mapping.yaml"
     shell:
-        "bcftools call -m -v -Ov -o {output} {input}" 
+        "ragtag.py correct {input[0]} {input[1]} -o{output.out_dir} -t 8"
 
-rule filter_vcf:
+rule ragtag_scaffold:
     input:
-        "result/RV417029_S19_L001.vcf",
-    output:
-        "result/RV417029_S19_L001_final.vcf",
-    conda:
-        "envs/mapping.yaml"
-    shell:
-        "vcfutils.pl varFilter {input} > {output}"
-
-rule vcf_bgzip:
-    input:
-        "result/RV417029_S19_L001_final.vcf",
-    output:
-        "result/RV417029_S19_L001_final.vcf.gz",
-    conda:
-        "envs/mapping.yaml"
-    shell:
-        "bcftools view {input} -Oz -o {output}"      
-
-rule consensus:
-    input:
-        "result/RV417029_S19_L001_final.vcf.gz",
         "workflow/ref.fasta",
+        "ragtag_output/correct/{sample}/ragtag.correct.fasta"       
     output:
-        "result/RV417029_S19_L001_final.vcf.gz.tbi",
-        "result/RV417029_S19_L001_consensus.fa",
+        out_dir = directory("ragtag_output/scaffold/{sample}"),
+        fasta = "ragtag_output/scaffold/{sample}/ragtag.scaffold.fasta"       
     conda:
         "envs/mapping.yaml"
     shell:
-        "bcftools index -t -o {output[0]} {input[0]} && bcftools consensus -f {input[1]} {input[0]} > {output[1]}"
- 
+        "ragtag.py scaffold {input[0]} {input[1]} -o {output.out_dir} "
+
+
+rule quast:
+    input:
+        "megahit_result/{sample}/final.contigs.fa",
+        "workflow/ref.fasta",
+        "original_fastq/FastqExamples/{sample}_R1_001.fastq",
+        "original_fastq/FastqExamples/{sample}_R2_001.fastq"
+    output:
+        directory('quast_report/{sample}')
+    conda:
+        "envs/mapping.yaml"
+    shell:
+        "quast.py -l megahit {input[0]}  -r {input[1]} -1 {input[2]} -2 {input[3]}  --rna-finding  -o {output} -t 4"
