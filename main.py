@@ -38,5 +38,5 @@ def run_snakemake():
     os.system(condastr)
 
 if __name__ == "__main__":
-    #run_snakemake()
+    run_snakemake()
     final_display()
