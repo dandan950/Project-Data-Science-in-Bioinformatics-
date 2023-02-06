@@ -48,6 +48,7 @@ snakemake</br>
 
 
 ### Pipeline Workflow Explanation
+Before you use our pipeline, you should create original data folder firstly.
 
 ##### Create Original Data Folder
 
@@ -67,10 +68,11 @@ After decompressing, `.fastq` file is in `Project-Data-Science-in-Bioinformatics
 gzip -d RV41702*
 ```
 
-##### File Explanation
+##### Somes Files Explanation
 * `Project-Data-Science-in-Bioinformatics-/workflow` folder: source code folder </br>
   * `workflow/snakefile`: this is code of pipeline, using snakemake to manage.</br>
   * `workflow/envs/mapping.yaml`: is the environment
+* `main.py`: connect snakefile, pangolin and display. 
   
 # How to Run
 we use `bash env.sh`and `main.py` to run, </br>
