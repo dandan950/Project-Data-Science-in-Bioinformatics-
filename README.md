@@ -33,8 +33,9 @@ And we design two pipelines, the following:
 
 ##### Tools
 
-conda</br>
+miniconda</br>
 snakemake</br>
+python3</br>
 - fastqc >=0.11.9
 - fastp >=0.22.0
 - bcftools >=1.9
