@@ -79,11 +79,11 @@ conda activate pangolin
 python3 main.py
 ```
 # Somes Files Explanation
-* `/workflow` folder: source code of pipeline 1 folder </br>
-  * `workflow/snakefile`: this is code of pipeline, using snakemake to manage.</br>
+* `/workflow` folder: source code of pipeline 1  (reference-guided assembly pipeline) folder </br>
+  * `workflow/snakefile`: this is code of pipeline (reference-guided assembly pipeline), using snakemake to manage.</br>
   * `workflow/envs/mapping.yaml`: is the environment
-* `/workflow2` folder: source code of pipeline 2 folder </br>
-  * `workflow2/snakefile`: this is code of pipeline, using snakemake to manage.</br>
+* `/workflow2` folder: source code of pipeline 2 (de novo assembly pipeline) folder </br>
+  * `workflow2/snakefile`: this is code of pipeline (de novo assembly pipeline), using snakemake to manage.</br>
   * `workflow2/envs/mapping.yaml`: is the environment
 * `main.py`: link the pipeline 1 and pipeline2, connect snakefile, pangolin，generate midresult and display results. 
 * `env.sh` : configuration environment automatically.
