@@ -48,7 +48,7 @@ Before you use our pipeline, you should create original data folder in our proje
 `original_fastq` is ignored, which you could see in `.gitignore`</br>
 
 
-You need to self create `/original_fastq` folder. And put data to the folder. </br>
+* You need to self create `/original_fastq` folder. And put data to the folder. </br>
 The following command is let `FastqExamples.tar.gz` in `local/work` folder decompress into `original_fastq` folder</br>
 ```
 tar -zxvf FastqExamples.tar.gz -C /homes/hong.yang/Project-Data-Science-in-Bioinformatics-/original_fastq/
