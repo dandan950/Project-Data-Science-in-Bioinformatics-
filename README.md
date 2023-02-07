@@ -85,3 +85,5 @@ python3 main.py
 * `main.py`: link the pipeline 1 and pipeline2, connect snakefile, pangolin，generate midresult and display results. 
 * `env.sh` : configuration environment automatically.
 
+# Report
+After using, you could see report of `quast`, `pangolin`, `fastqc`
