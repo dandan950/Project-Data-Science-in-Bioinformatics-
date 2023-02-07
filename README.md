@@ -78,6 +78,7 @@ conda activate pangolin
 ```
 python3 main.py
 ```
+Note: `main.py` will generate `midresult`, which is used in pipeline 1. Before you test pipeline 1,  please make sure run main.py firstly.
 # Somes Files Explanation
 * `/workflow` folder: source code of pipeline 1  (reference-guided assembly pipeline) folder </br>
   * `workflow/snakefile`: this is code of pipeline (reference-guided assembly pipeline), using snakemake to manage.</br>
