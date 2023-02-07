@@ -2,10 +2,10 @@ SAMPLES = ["RV417026_S15_L001", "RV417027_S18_L001", "RV417028_S20_L001","RV4170
 
 rule all:
     input:
-        expand("pipeline_deNovo_ragtag_output/correct/{sample}/ragtag.correct.fasta" ,sample=SAMPLES), 
-        expand("pipeline_deNovo_ragtag_output/scaffold/{sample}/ragtag.scaffold.fasta" ,sample=SAMPLES),       
-        directory(expand('pipeline_deNovo_quast_report/{sample}',sample=SAMPLES)), 
-        expand("pipeline_deNovo_megahit_result/{sample}/final.contigs.fa",sample=SAMPLES)
+        expand("pipeline2_deNovo_ragtag_output/correct/{sample}/ragtag.correct.fasta" ,sample=SAMPLES), 
+        expand("pipeline2_deNovo_ragtag_output/scaffold/{sample}/ragtag.scaffold.fasta" ,sample=SAMPLES),       
+        directory(expand('pipeline2_deNovo_quast_report/{sample}',sample=SAMPLES)), 
+        expand("pipeline2_deNovo_megahit_result/{sample}/final.contigs.fa",sample=SAMPLES)
 
         
 rule fastp:
@@ -13,8 +13,8 @@ rule fastp:
         "original_fastq/FastqExamples/{sample}_R1_001.fastq",
         "original_fastq/FastqExamples/{sample}_R2_001.fastq",
     output:
-        "pipeline_deNovo_filtered_result/{sample}_R1_001.cleaned.fastq",
-        "pipeline_deNovo_filtered_result/{sample}_R2_001.cleaned.fastq"
+        "pipeline2_deNovo_filtered_result/{sample}_R1_001.cleaned.fastq",
+        "pipeline2_deNovo_filtered_result/{sample}_R2_001.cleaned.fastq"
     conda:
         "envs/mapping.yaml"
     shell:
@@ -23,11 +23,11 @@ rule fastp:
 
 rule megahit:
     input:
-        "pipeline_deNovo_filtered_result/{sample}_R1_001.cleaned.fastq",
-        "pipeline_deNovo_filtered_result/{sample}_R2_001.cleaned.fastq"
+        "pipeline2_deNovo_filtered_result/{sample}_R1_001.cleaned.fastq",
+        "pipeline2_deNovo_filtered_result/{sample}_R2_001.cleaned.fastq"
     output:
-        out_dir = directory("pipeline_deNovo_megahit_result/{sample}/"),
-        fasta = "pipeline_deNovo_megahit_result/{sample}/final.contigs.fa"
+        out_dir = directory("pipeline2_deNovo_megahit_result/{sample}/"),
+        fasta = "pipeline2_deNovo_megahit_result/{sample}/final.contigs.fa"
     conda:
         "envs/mapping.yaml"
     shell:
@@ -36,10 +36,10 @@ rule megahit:
 rule ragtag_correct:
     input:
         "workflow/ref.fasta",
-        "pipeline_deNovo_megahit_result/{sample}/final.contigs.fa"   
+        "pipeline2_deNovo_megahit_result/{sample}/final.contigs.fa"   
     output:
-        out_dir = directory("pipeline_deNovo_ragtag_output/correct/{sample}"),
-        fasta = "pipeline_deNovo_ragtag_output/correct/{sample}/ragtag.correct.fasta"
+        out_dir = directory("pipeline2_deNovo_ragtag_output/correct/{sample}"),
+        fasta = "pipeline2_deNovo_ragtag_output/correct/{sample}/ragtag.correct.fasta"
     conda:
         "envs/mapping.yaml"
     shell:
@@ -48,10 +48,10 @@ rule ragtag_correct:
 rule ragtag_scaffold:
     input:
         "workflow/ref.fasta",
-        "pipeline_deNovo_ragtag_output/correct/{sample}/ragtag.correct.fasta"       
+        "pipeline2_deNovo_ragtag_output/correct/{sample}/ragtag.correct.fasta"       
     output:
-        out_dir = directory("pipeline_deNovo_ragtag_output/scaffold/{sample}"),
-        fasta = "pipeline_deNovo_ragtag_output/scaffold/{sample}/ragtag.scaffold.fasta"       
+        out_dir = directory("pipeline2_deNovo_ragtag_output/scaffold/{sample}"),
+        fasta = "pipeline2_deNovo_ragtag_output/scaffold/{sample}/ragtag.scaffold.fasta"       
     conda:
         "envs/mapping.yaml"
     shell:
@@ -60,12 +60,12 @@ rule ragtag_scaffold:
 
 rule quast:
     input:
-        "pipeline_deNovo_megahit_result/{sample}/final.contigs.fa",
+        "pipeline2_deNovo_megahit_result/{sample}/final.contigs.fa",
         "workflow/ref.fasta",
         "original_fastq/FastqExamples/{sample}_R1_001.fastq",
         "original_fastq/FastqExamples/{sample}_R2_001.fastq"
     output:
-        directory('pipeline_deNovo_quast_report/{sample}')
+        directory('pipeline2_deNovo_quast_report/{sample}')
     conda:
         "envs/mapping.yaml"
     shell:
