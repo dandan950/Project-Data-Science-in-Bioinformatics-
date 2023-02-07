@@ -1,5 +1,5 @@
 #!/bin/bash
-# author:Liu Ruidan
+
 
 echo "befor the install, assume the computer have Miniconda";
 source ~/mambaforge/etc/profile.d/conda.sh;
