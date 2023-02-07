@@ -40,11 +40,11 @@ python3</br>
 
 # Before You Use
 
-Before you use our pipeline, you should create original data folder firstly. And put original data into the folder, then decompress gz files(.fastq.gz -> .fastq). The following is more details:
+Before you use our pipeline, you should create original data folder in our project folder firstly. And put original data into the folder, then decompress gz files(.fastq.gz -> .fastq). The following is more details:
 
 ##### Create Original Data Folder
 
-* The original read files are in `local/work` in server. You need to create `original_fastq` folder, it use to put original read data(.fastq/.fastq.gz). </br>
+* The original read files are in `local/work` in server. You need to create `original_fastq` folder in our project folder `Project-Data-Science-in-Bioinformatics-/`, it use to put original read data(.fastq/.fastq.gz). </br>
 `original_fastq` is ignored, which you could see in `.gitignore`</br>
 
 
