@@ -88,7 +88,7 @@ Note: `main.py` will generate `midresult`, which is used in pipeline 1. Before y
   * `workflow2/envs/mapping.yaml`: is the environment
 * `main.py`: link the pipeline 1 and pipeline2, connect snakefile, pangolin，generate midresult and display results. 
 * `env.sh` : configuration environment automatically.</br>
-Note: braunch `de-novo-assembly` is just backup of pipeline 2. 
+Note: branch `de-novo-assembly` is just backup of pipeline 2. 
 
 # Report
 After using, you could see report of `quast`, `pangolin`, `fastqc`
