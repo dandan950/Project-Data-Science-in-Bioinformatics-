@@ -2,9 +2,9 @@ SAMPLES = ["RV417026_S15_L001", "RV417027_S18_L001", "RV417028_S20_L001","RV4170
 
 rule all:
     input:  
-        expand("pipeline_ref_result/{sample}_consensus.fa",sample=SAMPLES),
-        directory(expand('pipeline_ref_fastqc_report/before/{sample}',sample=SAMPLES)), 
-        directory(expand('pipeline_ref_fastqc_report/after/{sample}',sample=SAMPLES)) 
+        expand("pipeline1_ref_result/{sample}_consensus.fa",sample=SAMPLES),
+        directory(expand('pipeline1_ref_fastqc_report/before/{sample}',sample=SAMPLES)), 
+        directory(expand('pipeline1_ref_fastqc_report/after/{sample}',sample=SAMPLES)) 
 
 
 
@@ -13,7 +13,7 @@ rule qc_before:
         "original_fastq/FastqExamples/{sample}_R1_001.fastq",
         "original_fastq/FastqExamples/{sample}_R2_001.fastq",
     output:
-        directory('pipeline_ref_fastqc_report/before/{sample}')    
+        directory('pipeline1_ref_fastqc_report/before/{sample}')    
     conda:
         "envs/mapping.yaml"
     shell:
@@ -24,8 +24,8 @@ rule fastp:
         "original_fastq/FastqExamples/{sample}_R1_001.fastq",
         "original_fastq/FastqExamples/{sample}_R2_001.fastq",
     output:
-        "pipeline_ref_filtered_result/{sample}_R1_001.cleaned.fastq",
-        "pipeline_ref_filtered_result/{sample}_R2_001.cleaned.fastq"
+        "pipeline1_ref_filtered_result/{sample}_R1_001.cleaned.fastq",
+        "pipeline1_ref_filtered_result/{sample}_R2_001.cleaned.fastq"
     conda:
         "envs/mapping.yaml"
     shell:
@@ -34,10 +34,10 @@ rule fastp:
 
 rule qc_after:
     input:
-        "pipeline_ref_filtered_result/{sample}_R1_001.cleaned.fastq",
-        "pipeline_ref_filtered_result/{sample}_R2_001.cleaned.fastq",
+        "pipeline1_ref_filtered_result/{sample}_R1_001.cleaned.fastq",
+        "pipeline1_ref_filtered_result/{sample}_R2_001.cleaned.fastq",
     output:
-         directory('pipeline_ref_fastqc_report/after/{sample}')   
+         directory('pipeline1_ref_fastqc_report/after/{sample}')   
     conda:
         "envs/mapping.yaml"
     shell:
@@ -46,10 +46,10 @@ rule qc_after:
 
 rule bwa_mem:
     input:
-        "pipeline_ref_filtered_result/{sample}_R1_001.cleaned.fastq",
-        "pipeline_ref_filtered_result/{sample}_R2_001.cleaned.fastq",
+        "pipeline1_ref_filtered_result/{sample}_R1_001.cleaned.fastq",
+        "pipeline1_ref_filtered_result/{sample}_R2_001.cleaned.fastq",
     output:
-        "pipeline_ref_mapped/{sample}.bam"
+        "pipeline1_ref_mapped/{sample}.bam"
     conda:
         "envs/mapping.yaml"
     shell:
@@ -57,9 +57,9 @@ rule bwa_mem:
 
 rule sam_view:
     input:
-        "pipeline_ref_mapped/{sample}.bam"
+        "pipeline1_ref_mapped/{sample}.bam"
     output:
-        "pipeline_ref_mapped/{sample}_1.bam"
+        "pipeline1_ref_mapped/{sample}_1.bam"
     conda:
         "envs/mapping.yaml"
     shell:
@@ -67,9 +67,9 @@ rule sam_view:
     
 rule sam_sort:
     input:
-        "pipeline_ref_mapped/{sample}_1.bam"
+        "pipeline1_ref_mapped/{sample}_1.bam"
     output:
-        "pipeline_ref_sorted/{sample}.bam"
+        "pipeline1_ref_sorted/{sample}.bam"
     conda:
         "envs/mapping.yaml"
     shell:
@@ -77,10 +77,10 @@ rule sam_sort:
 
 rule remove_duplicates:
     input:
-        "pipeline_ref_sorted/{sample}.bam"
+        "pipeline1_ref_sorted/{sample}.bam"
     output:
-        "pipeline_ref_sorted/{sample}.markdup.bam",
-        "pipeline_ref_sorted/{sample}.markdup_metrics.txt"
+        "pipeline1_ref_sorted/{sample}.markdup.bam",
+        "pipeline1_ref_sorted/{sample}.markdup_metrics.txt"
     conda:
         "envs/mapping.yaml"
     shell:
@@ -88,9 +88,9 @@ rule remove_duplicates:
 
 rule sam_index:
     input:
-        "pipeline_ref_sorted/{sample}.markdup.bam",
+        "pipeline1_ref_sorted/{sample}.markdup.bam",
     output:
-        "pipeline_ref_sorted/{sample}.bam.bai"
+        "pipeline1_ref_sorted/{sample}.bam.bai"
     conda:
         "envs/mapping.yaml"
     shell:
@@ -98,10 +98,10 @@ rule sam_index:
 
 rule mpileup:
     input:
-        "pipeline_ref_sorted/{sample}.markdup.bam",
+        "pipeline1_ref_sorted/{sample}.markdup.bam",
         "workflow/ref.fasta",
     output:
-        "pipeline_ref_sorted/{sample}.bcf",
+        "pipeline1_ref_sorted/{sample}.bcf",
     conda: 
         "envs/mapping.yaml"
     shell:
@@ -110,9 +110,9 @@ rule mpileup:
 
 rule call_variant:
     input:
-        "pipeline_ref_sorted/{sample}.bcf",
+        "pipeline1_ref_sorted/{sample}.bcf",
     output:
-        "pipeline_ref_result/{sample}.vcf",
+        "pipeline1_ref_result/{sample}.vcf",
     conda:
         "envs/mapping.yaml"
     shell:
@@ -120,9 +120,9 @@ rule call_variant:
 
 rule filter_vcf:
     input:
-        "pipeline_ref_result/{sample}.vcf",
+        "pipeline1_ref_result/{sample}.vcf",
     output:
-        "pipeline_ref_result/{sample}_final.vcf",
+        "pipeline1_ref_result/{sample}_final.vcf",
     conda:
         "envs/mapping.yaml"
     shell:
@@ -130,9 +130,9 @@ rule filter_vcf:
 
 rule vcf_bgzip:
     input:
-        "pipeline_ref_result/{sample}_final.vcf",
+        "pipeline1_ref_result/{sample}_final.vcf",
     output:
-        "pipeline_ref_result/{sample}_final.vcf.gz",
+        "pipeline1_ref_result/{sample}_final.vcf.gz",
     conda:
         "envs/mapping.yaml"
     shell:
@@ -140,11 +140,11 @@ rule vcf_bgzip:
 
 rule consensus:
     input:
-        "pipeline_ref_result/{sample}_final.vcf.gz",
+        "pipeline1_ref_result/{sample}_final.vcf.gz",
         "workflow/ref.fasta",
     output:
-        "pipeline_ref_result/{sample}_final.vcf.gz.tbi",
-        "pipeline_ref_result/{sample}_consensus.fa",
+        "pipeline1_ref_result/{sample}_final.vcf.gz.tbi",
+        "pipeline1_ref_result/{sample}_consensus.fa",
     conda:
         "envs/mapping.yaml"
     shell:
