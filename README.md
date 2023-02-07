@@ -14,21 +14,12 @@ we use `snakemake` to help us to simpllify the progress and use `vscode` to conn
 
 And we design two pipelines, the following:
 
-- `reference-guided assembly pipeline` QC and filter low quality read data --> read align-->read sort-->variant calling-->create consensus sequence -->lineage detection
+- `reference-guided assembly pipeline` QC and filter low quality read data --> read align-->read sort-->variant calling-->create consensus sequence -->lineage detection</br>
+in `workflow`
 
-- [x] QC and filter low quality read data
-- [x] read align
-- [x] read sort
-- [x] variant calling
-- [x] create consensus sequence 
-- [x] lineage detection
+- `de novo assembly pipeline` QC and filter low quality read data -->de novo assembly(Fragments -> Contigs -> Scaffolds) --> quast evaluation-->lineage detection</br>
+in`workflow2`
 
-- `de novo assembly pipeline` QC and filter low quality read data -->de novo assembly(Fragments -> Contigs -> Scaffolds) --> quast evaluation-->lineage detection
-
-- [x] QC and filter low quality read data
-- [x] de novo assembly(Fragments -> Contigs -> Scaffolds)
-- [x] quast evaluation
-- [x] lineage detection
 
 
 ##### Tools
@@ -57,7 +48,7 @@ Before you use our pipeline, you should create original data folder firstly. And
 `original_fastq` is ignored, which you could see in `.gitignore`</br>
 
 
-You need to self create `Project-Data-Science-in-Bioinformatics-/original_fastq` folder. And put data to the folder.</br>
+You need to self create `/original_fastq` folder. And put data to the folder.</br>
 ```
 tar -zxvf FastqExamples.tar.gz -C /homes/hong.yang/Project-Data-Science-in-Bioinformatics-/original_fastq/
 ```
@@ -85,8 +76,12 @@ conda activate pangolin
 python3 main.py
 ```
 # Somes Files Explanation
-* `Project-Data-Science-in-Bioinformatics-/workflow` folder: source code folder </br>
+* `/workflow` folder: source code of pipeline 1 folder </br>
   * `workflow/snakefile`: this is code of pipeline, using snakemake to manage.</br>
   * `workflow/envs/mapping.yaml`: is the environment
-* `main.py`: connect snakefile, pangolin，generate midresult and display results. 
+* `/workflow2` folder: source code of pipeline 2 folder </br>
+  * `workflow2/snakefile`: this is code of pipeline, using snakemake to manage.</br>
+  * `workflow2/envs/mapping.yaml`: is the environment
+* `main.py`: link the pipeline 1 and pipeline2, connect snakefile, pangolin，generate midresult and display results. 
 * `env.sh` : configuration environment automatically.
+
