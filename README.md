@@ -49,7 +49,7 @@ Before you use our pipeline, you should create original data folder in our proje
 
 
 * After creating `/original_fastq` folder. You need to put data to the folder. </br>
-The original read files are in `local/work` in server. </br>
+The original read files`FastqExamples.tar.gz` are in `local/work/FastqModuleDSiB/` in server. </br>
 The following command is let `FastqExamples.tar.gz` in `local/work` folder decompress into `original_fastq` folder</br>
 ```
 tar -zxvf FastqExamples.tar.gz -C /homes/hong.yang/Project-Data-Science-in-Bioinformatics-/original_fastq/
