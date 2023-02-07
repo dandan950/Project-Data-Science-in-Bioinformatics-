@@ -44,11 +44,12 @@ Before you use our pipeline, you should create original data folder in our proje
 
 ##### Create Original Data Folder and Put Original Read Data
 
-* The original read files are in `local/work` in server. You need to create `original_fastq` folder in our project folder `Project-Data-Science-in-Bioinformatics-/`, it use to put original read data(.fastq/.fastq.gz). Please make sure the folder name is same. </br>
+*  You need to create `original_fastq` folder in our project folder `Project-Data-Science-in-Bioinformatics-/`, it use to put original read data(.fastq/.fastq.gz). Please make sure the folder name is same. </br>
 `original_fastq` is ignored, which you could see in `.gitignore`</br>
 
 
-* You need to self create `/original_fastq` folder. And put data to the folder. </br>
+* After creating `/original_fastq` folder. You need to put data to the folder. </br>
+The original read files are in `local/work` in server. </br>
 The following command is let `FastqExamples.tar.gz` in `local/work` folder decompress into `original_fastq` folder</br>
 ```
 tar -zxvf FastqExamples.tar.gz -C /homes/hong.yang/Project-Data-Science-in-Bioinformatics-/original_fastq/
