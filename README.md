@@ -10,7 +10,7 @@
 
 ### Pipelines Introduction
 
-we use `snakemake` to help us to simpllify the progress and use `vscode` to connect the server `c44` .
+we use `snakemake` to help us to simpllify the progress and use `SSH` to connect the server `c44` .
 
 And we design two pipelines, the following:
 
