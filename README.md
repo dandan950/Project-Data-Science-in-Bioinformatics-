@@ -22,7 +22,7 @@ in `workflow`</br>
 in`workflow2`</br>
     - workflow2/snakefile: this is code of pipeline (de novo assembly pipeline), using snakemake to manage.</br>
     - workflow2/envs/mapping.yaml: is the environment
-- `env.sh` : configuration environment automatically and install pangolin, bwa and snakemake automatically.  
+- `env.sh` : configuration environment automatically and install pangolin, bwa, mamba and snakemake automatically.  
 - `main.py`: link the pipeline 1 and pipeline2, connect snakefile, pangolin，generate midresult ,which used in pipeline1, and display results. 
 
 Note: branch `de-novo-assembly` is just backup of pipeline 2. 
@@ -75,7 +75,7 @@ How to install Mambaforge?
 3. finish the step of `conda init`
 
 Where is Mambaforge Installing path?</br>
-  Mambaforge path should in `/homes/{username}/mambaforge/...` directory(`~/mambaforge`). Because we will following this path to call mambaforge in `env.sh`. env.sh will automatically install pangolin, bwa and snakemake. The following code is calling path in env.sh.
+  Mambaforge path should in `/homes/{username}/mambaforge/...` directory(`~/mambaforge`). Because we will following this path to call mambaforge in `env.sh`. env.sh will automatically install pangolin, bwa, mamba and snakemake. The following code is calling path in env.sh.
 
 ```
 source ~/mambaforge/etc/profile.d/conda.sh;
