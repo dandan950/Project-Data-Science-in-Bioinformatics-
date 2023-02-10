@@ -24,6 +24,7 @@ in`workflow2`</br>
     - workflow2/envs/mapping.yaml: is the environment
 - `env.sh` : configuration environment automatically and install pangolin, bwa, mamba and snakemake automatically.  
 - `main.py`: link the pipeline 1 and pipeline2, connect snakefile, pangolin，generate midresult ,which used in pipeline1, and display results. 
+- `sample.py` : get `SAMPLES` name from original_fastq/FastqExample folder. 
 
 Note: branch `de-novo-assembly` is just backup of pipeline 2. 
 
@@ -52,13 +53,18 @@ The following is some tools that we used in the project:
 
 Before you use our pipeline, you should create original data folder in our project folder firstly. And put original data into the folder, then decompress gz files(.fastq.gz -> .fastq). The following is more details:
 
-##### Input Data Folder
+### Input Data Folder
 
--  You need to create `/original_fastq/FastqExample` folder in our project, it use to put original read data( only `.fastq` format). Please make sure the folder name is same. </br>
+You need to create `/original_fastq/FastqExample` folder in our project, it use to put original read data( only `.fastq` format). Please make sure the folder name is same. </br>
 `original_fastq` is ignored, which you could see in `.gitignore`</br>
 
+### Input Data Format
+- Input data should be only `.fastq` format, NOT `.fastq.gz`.</br>
+- Input data should be ended with `_R1_001.fastq` or `_R2_001.fastq`</br>
+For Examples: </br>
+RV417026_S15_L001_R1_001.fastq and RV417026_S15_L001_R2_001.fastq are putted into `/original_fastq/FastqExample` folder, RV417026_S15_L001 will be identify into SAMPLES. 
 
-##### Environments and Software Requirement
+### Environments and Software Requirement
 
 You need to install `mambaforge`,`git`,`python3` and `pip` in advance and finish `conda init`.  
 
@@ -82,7 +88,7 @@ Where is Mambaforge Installing path?</br>
 source ~/mambaforge/etc/profile.d/conda.sh;
 ```
 
-##### Suggest System
+### Suggest System
 
 We suggest that run in the `Ubuntu`, Version 16 or newer version.
 
