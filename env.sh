@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-echo "befor the install, assume the computer have Miniconda";
+echo "befor the install, assume the computer have Mambaforege in the path: ~/mambaforge";
 source ~/mambaforge/etc/profile.d/conda.sh;
 source ~/miniconda3/etc/profile.d/conda.sh;
 conda install -n base -c conda-forge mamba -y;
