@@ -101,7 +101,7 @@ conda activate pangolin
 python3 main.py
 ```
 Note: 
-* `env.sh` will configuration environment automatically and install pangolin, bwa and snakemake automatically. So before you run pipelines, gurantee to run env.sh once
+* `env.sh` will configuration environment automatically and install pangolin, bwa, mamba and snakemake automatically. So before you run pipelines, gurantee to run env.sh once
 * `conda activate pangolin` is not necessary, which is included already in main.py.
 * `main.py` will generate `midresult`, which is used in pipeline 1. Before you test pipeline 1 alone, gurantee to run main.py once.
 
