@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-echo "befor the install, assume the computer have Mambaforege in the path: ~/mambaforge";
+echo "befor the install, assume the computer have Mambaforege( in the path: ~/mambaforge), pip, git, python3";
 source ~/mambaforge/etc/profile.d/conda.sh;
 # automatically install mamba
 conda install -n base -c conda-forge mamba -y;
