@@ -28,7 +28,7 @@ in`workflow2`</br>
 Note: branch `de-novo-assembly` is just backup of pipeline 2. 
 
 
-The following is some tools that we used in the project
+The following is some tools that we used in the project:
 
 |Tools |
 |-------|
@@ -101,8 +101,10 @@ conda activate pangolin
 python3 main.py
 ```
 Note: 
-* `main.py` will generate `midresult`, which is used in pipeline 1. Before you test pipeline 1,  please make sure run main.py firstly.
+* `env.sh` will configuration environment automatically and install pangolin, bwa and snakemake automatically. So before you run pipelines, gurantee to run env.sh once
 * `conda activate pangolin` is not necessary, which is included already in main.py.
+* `main.py` will generate `midresult`, which is used in pipeline 1. Before you test pipeline 1 alone, gurantee to run main.py once.
+
 
 
 # Report
