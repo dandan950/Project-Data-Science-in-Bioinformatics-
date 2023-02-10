@@ -25,6 +25,7 @@ in`workflow2`
 ##### Tools
 
 miniconda</br>
+mambaforge</br>
 snakemake</br>
 python3</br>
 - fastqc >=0.11.9
