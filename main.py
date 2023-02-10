@@ -1,6 +1,7 @@
 import os
 import sys
 import csv
+import sample
 
 # function of pangolin command
 def pangolinexec(inputfile="", outDirectory="",outputfile=""):
@@ -14,7 +15,8 @@ def pangolinexec(inputfile="", outDirectory="",outputfile=""):
     return execstr+"; "
 
 # array of input read data name
-SAMPLES = ["RV417026_S15_L001", "RV417027_S18_L001", "RV417028_S20_L001","RV417029_S19_L001"]
+SAMPLES = sample.get_SAMPLES()
+# SAMPLES = ["RV417026_S15_L001", "RV417027_S18_L001", "RV417028_S20_L001","RV417029_S19_L001"]
 
 # function of displaying results
 def final_display():
