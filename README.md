@@ -70,7 +70,8 @@ python3| |
 pip| |
 
 How to install Mambaforge?
-1. download https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh 
+1. download https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh </br>
+  you could use `wget https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh`
 2. bash Mambaforge-Linux-X86_64.sh
 3. finish the step of `conda init`
 
