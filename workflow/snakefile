@@ -1,4 +1,8 @@
-SAMPLES = ["RV417026_S15_L001", "RV417027_S18_L001", "RV417028_S20_L001","RV417029_S19_L001"]
+import os,sys
+sys.path.append(os.path.abspath('.'))
+import sample
+SAMPLES =sample.get_SAMPLES()
+#SAMPLES = ["RV417026_S15_L001", "RV417027_S18_L001", "RV417028_S20_L001","RV417029_S19_L001"]
 
 rule all:
     input:  
